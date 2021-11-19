@@ -1,0 +1,10 @@
+<ul *ngFor="let task of tasks">
+    <li>
+      {{task.name}}
+      <button (click)="deleteTask(task.id)">Delete</button>
+    </li>
+</ul>
+
+<label for="task">Enter a new task</label><br>
+<input type="text" id="task" name="task" [formControl]="newTask">
+<button (click)="addTask()">Add</button>
