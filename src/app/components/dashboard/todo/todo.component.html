@@ -1,10 +1,17 @@
-<ul *ngFor="let task of tasks">
-    <li>
+<div>
+  <form [formGroup]="taskForm" (ngSubmit)="addTask()">
+    <div>
+      <label for="taskName">Enter a new task</label><br>
+      <input type="text" id="task" name="taskName" placeholder="Add Task" formControlName="taskName">
+    </div>
+    <button type="submit">Add</button>
+  </form>
+
+  <ul>
+    <li *ngFor="let task of tasks">
       {{task.name}}
       <button (click)="deleteTask(task.id)">Delete</button>
     </li>
-</ul>
+  </ul>
+</div>
 
-<label for="task">Enter a new task</label><br>
-<input type="text" id="task" name="task" [formControl]="newTask">
-<button (click)="addTask()">Add</button>

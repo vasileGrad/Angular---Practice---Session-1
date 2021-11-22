@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
 import { tasks } from 'src/app/tasks';
 
@@ -11,15 +11,17 @@ import { tasks } from 'src/app/tasks';
 export class TodoComponent implements OnInit {
 
   tasks = tasks;
-  newTask = new FormControl('');
+  taskForm = this.formBuilder.group({
+    taskName: ''
+  });
 
   addTask = () => {
-    if (this.newTask.value) {
+    if (this.taskForm.value.taskName) {
       this.tasks.push({
         id: this.tasks.length > 0 ? this.tasks[this.tasks.length-1].id + 1 : 0,
-        name: this.newTask.value
+        name: this.taskForm.value.taskName
       });
-      this.newTask.setValue("");
+      this.taskForm.reset();
     }
   }
 
@@ -27,7 +29,7 @@ export class TodoComponent implements OnInit {
     this.tasks.splice(this.tasks.findIndex(task => task.id === id), 1);
   }
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
   }
