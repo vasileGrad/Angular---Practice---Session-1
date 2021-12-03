@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
-import { tasks } from 'src/app/tasks';
+import { TasksService } from 'src/app/services/tasks.service';
 
 @Component({
   selector: 'app-todo',
@@ -10,10 +10,20 @@ import { tasks } from 'src/app/tasks';
 })
 export class TodoComponent implements OnInit {
 
-  tasks = tasks;
+  tasks: any = [];
   taskForm = this.formBuilder.group({
     taskName: ''
   });
+
+  constructor(private formBuilder: FormBuilder, private tasksService: TasksService) { }
+
+  ngOnInit(): void {
+    this.getTasksData();
+  }
+
+  getTasksData() {
+    this.tasks = this.tasksService.getTasks();
+  }
 
   addTask = () => {
     if (this.taskForm.value.taskName) {
@@ -26,12 +36,7 @@ export class TodoComponent implements OnInit {
   }
 
   deleteTask = (id: number) => {
-    this.tasks.splice(this.tasks.findIndex(task => task.id === id), 1);
-  }
-
-  constructor(private formBuilder: FormBuilder) { }
-
-  ngOnInit(): void {
+    this.tasks.splice(this.tasks.findIndex((task: any) => task.id === id), 1);
   }
 
 }
